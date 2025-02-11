@@ -20,10 +20,5 @@ COPY addons /mnt/extra-addons
 # Expose Odoo port
 EXPOSE 8069
 
-# Start Odoo with correct database variables
-CMD ["odoo", 
-     "--db_host=${DB_HOST}", 
-     "--db_port=${DB_PORT}", 
-     "--db_user=${DB_USER}", 
-     "--db_password=${DB_PASSWORD}", 
-     "--db_name=${DB_NAME}"]
+# Start Odoo with correct database variables (Shell format for env expansion)
+CMD odoo --db_host="$DB_HOST" --db_port="$DB_PORT" --db_user="$DB_USER" --db_password="$DB_PASSWORD" --db_name="$DB_NAME"
