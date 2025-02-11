@@ -1,17 +1,21 @@
 # Use Odoo 12 official image
 FROM odoo:12
 
+# Ensure the addons directory exists before changing ownership
+RUN mkdir -p /mnt/extra-addons
+
+# Set proper ownership
+USER root
+RUN chown -R odoo /mnt/extra-addons
+
+# Switch back to Odoo user
+USER odoo
+
 # Set the working directory
 WORKDIR /var/lib/odoo
 
-# Ensure the addons directory exists
-RUN mkdir -p /mnt/extra-addons && chown -R odoo /mnt/extra-addons
-
 # Copy custom addons (if any)
 COPY addons /mnt/extra-addons
-
-# Ensure proper ownership
-RUN chown -R odoo /mnt/extra-addons
 
 # Expose Odoo port
 EXPOSE 8069
