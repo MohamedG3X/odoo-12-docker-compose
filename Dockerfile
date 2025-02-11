@@ -4,8 +4,8 @@ FROM odoo:12
 # Set environment variables (Railway will override them at runtime)
 ENV DB_HOST="postgres.railway.internal"
 ENV DB_PORT="5432"
-ENV DB_USER="postgres"
-ENV DB_PASSWORD="your_default_password"
+ENV DB_USER="BFC"
+ENV DB_PASSWORD="LOLO12lolo"
 
 # Expose Odoo's default port
 EXPOSE 8069
