@@ -1,23 +1,15 @@
-# Use the official Odoo 12 image
+# Use the official Odoo 12 image as the base
 FROM odoo:12
 
-# Switch to root to set up directories
-USER root
+# Set environment variables with default values if not provided
+ENV DB_HOST=${DB_HOST:-"postgres.railway.internal"}
+ENV DB_PORT=${DB_PORT:-5432}
+ENV DB_USER=${DB_USER:-"postgres"}
+ENV DB_PASSWORD=${DB_PASSWORD:-"your_default_password"}
+ENV DB_NAME=${DB_NAME:-"railway"}
 
-# Create and set permissions for extra addons directory
-RUN mkdir -p /mnt/extra-addons && chown -R odoo:odoo /mnt/extra-addons
-
-# Switch back to Odoo user
-USER odoo
-
-# Set working directory
-WORKDIR /var/lib/odoo
-
-# Copy custom addons if any
-COPY addons /mnt/extra-addons
-
-# Expose Odoo port
+# Expose Odoo's default port
 EXPOSE 8069
 
-# Start Odoo with environment variables
-CMD ["bash", "-c", "odoo --db_host=$DB_HOST --db_port=$DB_PORT --db_user=$DB_USER --db_password=$DB_PASSWORD --db_name=$DB_NAME"]
+# Start Odoo with correctly formatted database parameters
+CMD ["bash", "-c", "odoo --db_host=${DB_HOST} --db_port=${DB_PORT} --db_user=${DB_USER} --db_password=${DB_PASSWORD} --db_name=${DB_NAME}"]
