@@ -1,15 +1,14 @@
 # Use the official Odoo 12 image as the base
 FROM odoo:12
 
-# Set environment variables with default values if not provided
+# Set environment variables (Railway will override them at runtime)
 ENV DB_HOST="postgres.railway.internal"
-ENV DB_PORT=5432
+ENV DB_PORT="5432"
 ENV DB_USER="postgres"
 ENV DB_PASSWORD="your_default_password"
-ENV DB_NAME="railway"
 
 # Expose Odoo's default port
 EXPOSE 8069
 
-# Start Odoo with correctly formatted database parameters
-CMD bash -c "odoo --db_host=$DB_HOST --db_port=$DB_PORT --db_user=$DB_USER --db_password=$DB_PASSWORD --db_name=$DB_NAME"
+# Start Odoo correctly (without --db_name)
+CMD ["bash", "-c", "odoo --db_host=$DB_HOST --db_port=$DB_PORT --db_user=$DB_USER --db_password=$DB_PASSWORD"]
